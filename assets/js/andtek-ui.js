@@ -20,10 +20,13 @@ $(document).ready(function(){
     for (var agent in agents) {
       $('ul').append(
         '<li class="item-content">' +
-        '  <div class="item-media"><i class="fa fa-circle ' + (agents[agent].internal ? 'green' : 'red') + '"></i></div>' +
+        '  <div class="item-media"><i class="fa fa-user"></i></div>' +
         '  <div class="item-inner">' +
         '    <div class="item-title">' + agent + '</div>' +
-        '    <div class="item-after"><i class="fa fa-circle ' + (agents[agent].external ? 'green' : 'red') + '"></i></div>' +
+        '    <div class="item-after">' +
+        '      <i class="fa fa-circle ' + (agents[agent].internal ? 'green' : 'red') + '"></i>' +
+        '      <i class="fa fa-circle ' + (agents[agent].external ? 'green' : 'red') + '"></i>' +
+        '    </div>' +
         '  </div>' +
         '</li>'
       );
