@@ -1,0 +1,27 @@
+{
+  "name": "andtekui",
+  "version": "1.0.0",
+  "homepage": "https://github.com/frdmn/AndTekUI",
+  "authors": [
+    "Jonas Friedmann <j@frd.mn>"
+  ],
+  "description": "Simple iOS (web app) dashboard for your AndTek call center",
+  "keywords": [
+    "andtek",
+    "call",
+    "center",
+    "dashboard"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "framework7": "~1.2.0"
+  }
+}
