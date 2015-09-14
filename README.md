@@ -1,21 +1,25 @@
-# AndTekUI
+# AndTekUI (WIP)
 
-[description]
+Simple iOS (web app) dashboard for your AndTek call center.
 
 ## Installation
 
 1. Make sure you've installed all requirements
-2. Clone this repository:
-  `git clone https://github.com/[GitHubUsername]/AndTekUI`
-3. Install the project using `make`:
-  `make install`
+2. Clone this repository:  
+  `git clone https://github.com/frdmn/AndTekUI`
+3. Adjust the MAC addresses of your agents handsets in the `agents.json`:  
+  `cp agents.default.json agents.json`
 
-## Usage
+## Development
 
-Here's a short explanation how to use `AndTekUI`:
-
-* Use it
-* Profit
+1. Make sure you've installed `grunt-cli` and `bower` globally:  
+  `npm install -g grunt-cli bower`  
+2. Install all Node dependencies:  
+  `npm install`
+3. Install all libraries using Bower:  
+  `bower install`  
+4. Run Grunt tasks to compile assets:  
+  `grunt`  
 
 ## Contributing
 
@@ -27,9 +31,8 @@ Here's a short explanation how to use `AndTekUI`:
 
 ## Requirements / Dependencies
 
-* This
-* That
-* As well as this
+* AndTek Call Center
+* Web server
 
 ## Version
 
