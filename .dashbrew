@@ -1,0 +1,11 @@
+---
+andtek.devel:
+  title: andtek
+  php:
+    build: system
+  vhost:
+    servername: andtek.devel
+    docroot: /vagrant/public/andtek/
+    serveraliases:
+      - www.andtek.devel
+    ssl: false
