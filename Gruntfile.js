@@ -86,16 +86,6 @@ module.exports = function(grunt) {
           }
         },
 
-        // Connect Server
-        connect: {
-            server: {
-                options: {
-                    port: 9001,
-                    base: ''
-                }
-            }
-        },
-
         // HTMLhint
         htmlhint: {
             html: {
@@ -155,5 +145,5 @@ module.exports = function(grunt) {
 
     grunt.registerTask('default', ['sass:build', 'autoprefixer', 'concat', 'uglify', 'imagemin']);
     grunt.registerTask('default', ['copy', 'sass:build', 'autoprefixer', 'concat', 'uglify']);
-    grunt.registerTask('dev', ['connect', 'watch']);
+    grunt.registerTask('dev', ['watch']);
 };
