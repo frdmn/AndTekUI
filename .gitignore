@@ -10,3 +10,5 @@ assets/js/*.js
 assets/css/style.css
 assets/css/framework7/*
 !assets/css/framework7/.gitkeep
+assets/img/*
+!assets/img/.gitkeep
