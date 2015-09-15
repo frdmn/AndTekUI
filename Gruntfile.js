@@ -74,17 +74,16 @@ module.exports = function(grunt) {
             },
         },
 
-
         // Imagemin
         imagemin: {
-            dynamic: {
-                files: [{
-                    expand: true,
-                    cwd: '<%= dirs.images %>',
-                    src: ['**/*.{png,jpg,gif}'],
-                    dest: '<%= dirs.images %>'
-                }]
-            }
+          dynamic: {
+              files: [{
+                  expand: true,
+                  cwd: '<%= dirs.images %>',
+                  src: ['**/*.{png,jpg,gif}'],
+                  dest: '<%= dirs.images %>'
+              }]
+          }
         },
 
         // Connect Server
@@ -156,5 +155,5 @@ module.exports = function(grunt) {
 
     grunt.registerTask('default', ['sass:build', 'autoprefixer', 'concat', 'uglify', 'imagemin']);
     grunt.registerTask('default', ['copy', 'sass:build', 'autoprefixer', 'concat', 'uglify']);
-    grunt.registerTask('dev', ['connect', 'watch', 'notify']);
+    grunt.registerTask('dev', ['connect', 'watch']);
 };
