@@ -1,6 +1,10 @@
+/* Reset inactive color for label */
+
 .list-block .item-after {
   color: initial;
 }
+
+/* Color handler */
 
 .green {
   color: green;
@@ -9,6 +13,8 @@
 .red {
   color: red;
 }
+
+/* Helper to force elements using float:right */
 
 .force-right {
   float: right;
