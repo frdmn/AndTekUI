@@ -4,3 +4,6 @@ bower_components
 
 ### AndTekUI
 agents.json
+assets/js/*.js
+!assets/js/app.js
+!assets/js/build.js
