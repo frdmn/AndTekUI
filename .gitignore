@@ -6,7 +6,6 @@ bower_components
 agents.json
 assets/js/*.js
 !assets/js/app.js
-!assets/js/build.js
 assets/css/style.css
 assets/css/framework7/*
 !assets/css/framework7/.gitkeep
