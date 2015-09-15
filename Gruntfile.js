@@ -52,7 +52,7 @@ module.exports = function(grunt) {
               { expand: true, cwd: '<%= dirs.bower %>/framework7/dist/css/', src: [ 'framework7.ios.css' ], dest: '<%= dirs.css %>/framework7', rename: function(dest) { return dest + '/framework7.ios.scss'; } },
               { expand: true, cwd: '<%= dirs.bower %>/framework7/dist/css/', src: [ 'framework7.ios.rtl.css' ], dest: '<%= dirs.css %>/framework7', rename: function(dest) { return dest + '/framework7.ios.rtl.scss'; } },
               { expand: true, cwd: '<%= dirs.bower %>/framework7/dist/css/', src: [ 'framework7.ios.colors.css' ], dest: '<%= dirs.css %>/framework7', rename: function(dest) { return dest + '/framework7.ios.colors.scss'; } },
-              { expand: true, cwd: '<%= dirs.bower %>/modernizr/', src: [ 'modernizr.js' ], dest: '<%= dirs.js %>', rename: function(dest) { return dest + '/framework7.ios.colors.scss'; } }
+              { expand: true, cwd: '<%= dirs.bower %>/modernizr/', src: [ 'modernizr.js' ], dest: '<%= dirs.js %>', rename: function(dest) { return dest + '/modernizr.js'; } }
             ]
           }
         },
