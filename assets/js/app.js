@@ -1,35 +1,8 @@
-// Initialize your app
-var myApp = new Framework7();
 
-// Export selectors engine
+var myApp = new Framework7();
 var $$ = Dom7;
 
-// Add view
-var mainView = myApp.addView('.view-main', {
-    // Because we use fixed-through navbar we can enable dynamic navbar
-    dynamicNavbar: true
-});
-
-// Wait until jQuery is loaded...
-$(document).ready(function(){
-  // Parse agents from JSON
-  $.getJSON('agents.json', function(agents) {
-    // Get rid of "Loading ..." dummy entry
-    $('ul').html('');
-    // For each agent ...
-    for (var agent in agents) {
-      $('ul').append(
-        '<li class="item-content">' +
-        '  <div class="item-media"><i class="fa fa-user"></i></div>' +
-        '  <div class="item-inner">' +
-        '    <div class="item-title">' + agent + '</div>' +
-        '    <div class="item-after">' +
-        '      <i class="fa fa-circle ' + (agents[agent].internal ? 'green' : 'red') + '"></i>' +
-        '      <i class="fa fa-circle ' + (agents[agent].external ? 'green' : 'red') + '"></i>' +
-        '    </div>' +
-        '  </div>' +
-        '</li>'
-      );
-    }
-  });
-});
+var view1 = myApp.addView('#view-1');
+var view2 = myApp.addView('#view-2',{dynamicNavbar:true});
+var view3 = myApp.addView('#view-3');
+var view4 = myApp.addView('#view-4');
