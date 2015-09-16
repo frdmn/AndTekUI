@@ -33,7 +33,7 @@ $(document).ready(function(){
     async: false
   });
 
-  // Check for declared deviceMac variable... if it doesn't exist, no MAC was passed
+  // Check for declared deviceMac variable... if it doesn't exist, no MAC was passed => show error in dashboard (view-1)
   if (!deviceMac) {
     $('#view-1 ul').html(
       '<li>' +
@@ -49,7 +49,7 @@ $(document).ready(function(){
     $('#view-1 ul').html('');
     // For each agent in configuration ...
     for (var queue in config.queues) {
-      if (isInArray(config.queues[queue], config.agents[deviceMac].queues)) {
+      if (config.agents[deviceMac] && isInArray(config.queues[queue], config.agents[deviceMac].queues)) {
         $('#view-1 ul').append(
           '<li>' +
           '  <div class="item-content">' +
@@ -70,22 +70,36 @@ $(document).ready(function(){
       }
     }
 
-    // Get rid of "Loading ..." dummy entry
-    $('#view-2 ul').html('');
-    // Populate "agents" view for each agent in configuration ...
-    for (var agent in config.agents) {
-      $('#view-2 ul').append(
-        '<li class="item-content">' +
-        '  <div class="item-media"><i class="fa fa-user"></i></div>' +
-        '  <div class="item-inner">' +
-        '    <div class="item-title">' + config.agents[agent].name + '</div>' +
-        '    <div class="item-after">' +
-        '      status' +
+    // Check if there are any queues for current MAC
+    if ($('#view-1 ul li').length < 1) {
+      $('#view-1 ul').html(
+        '<li>' +
+        '  <div class="item-content">' +
+        '    <div class="item-inner">' +
+        '      <div class="item-title label">No queue available</div>' +
         '    </div>' +
         '  </div>' +
         '</li>'
       );
+
     }
+  }
+
+  // Get rid of "Loading ..." dummy entry
+  $('#view-2 ul').html('');
+  // Populate "agents" view for each agent in configuration ...
+  for (var agent in config.agents) {
+    $('#view-2 ul').append(
+      '<li class="item-content">' +
+      '  <div class="item-media"><i class="fa fa-user"></i></div>' +
+      '  <div class="item-inner">' +
+      '    <div class="item-title">' + config.agents[agent].name + '</div>' +
+      '    <div class="item-after">' +
+      '      status' +
+      '    </div>' +
+      '  </div>' +
+      '</li>'
+    );
   }
 });
 
