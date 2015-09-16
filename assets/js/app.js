@@ -6,6 +6,8 @@ var $$ = Dom7;
 var view1 = AndTekUI.addView('#view-1');
 var view2 = AndTekUI.addView('#view-2');
 
+var deviceMac;
+
 // Wait until jQuery is loaded...
 $(document).ready(function(){
   // Check if ""?mac=XXX" is set in URL
@@ -16,6 +18,8 @@ $(document).ready(function(){
         window.location.href.split('?')[0] + '?mac=YOUR_MAC' +
       '</code>'
     );
+  } else {
+    deviceMac = getQueryString('mac');
   }
 
   // Load current configuration file synchronously
@@ -29,22 +33,59 @@ $(document).ready(function(){
     async: false
   });
 
-  // Get rid of "Loading ..." dummy entry
-  $('#view-2 ul').html('');
-  // For each agent in configuration ...
-  for (var agent in config.agents) {
-    console.log(agent);
-    $('#view-2 ul').append(
-      '<li class="item-content">' +
-      '  <div class="item-media"><i class="fa fa-user"></i></div>' +
-      '  <div class="item-inner">' +
-      '    <div class="item-title">' + config.agents[agent].name + '</div>' +
-      '    <div class="item-after">' +
-      '      status' +
+  // Check for declared deviceMac variable... if it doesn't exist, no MAC was passed
+  if (!deviceMac) {
+    $('#view-1 ul').html(
+      '<li>' +
+      '  <div class="item-content">' +
+      '    <div class="item-inner">' +
+      '      <div class="item-title label">No handset passed</div>' +
       '    </div>' +
       '  </div>' +
       '</li>'
     );
+  } else {
+    // Get rid of "Loading ..." dummy entry
+    $('#view-1 ul').html('');
+    // For each agent in configuration ...
+    for (var queue in config.queues) {
+      if (isInArray(config.queues[queue], config.agents[deviceMac].queues)) {
+        $('#view-1 ul').append(
+          '<li>' +
+          '  <div class="item-content">' +
+          '    <div class="item-inner">' +
+          '      <div class="item-title label">' + capitalize(queue) + '</div>' +
+          '      <div class="item-after">' +
+          '        <div class="item-input">' +
+          '          <label class="label-switch">' +
+          '            <input type="checkbox" disabled="disabled">' +
+          '            <div class="checkbox"></div>' +
+          '          </label>' +
+          '        </div>' +
+          '      </div>' +
+          '    </div>' +
+          '  </div>' +
+          '</li>'
+        );
+      }
+    }
+
+    // Get rid of "Loading ..." dummy entry
+    $('#view-2 ul').html('');
+    // Populate "agents" view for each agent in configuration ...
+    for (var agent in config.agents) {
+      $('#view-2 ul').append(
+        '<li class="item-content">' +
+        '  <div class="item-media"><i class="fa fa-user"></i></div>' +
+        '  <div class="item-inner">' +
+        '    <div class="item-title">' + config.agents[agent].name + '</div>' +
+        '    <div class="item-after">' +
+        '      status' +
+        '    </div>' +
+        '  </div>' +
+        '</li>'
+      );
+    }
   }
 });
 
@@ -60,3 +101,22 @@ var getQueryString = function ( field, url ) {
     var string = reg.exec(href);
     return string ? string[1] : null;
 };
+
+/**
+ * Returns the first character just with a capitalized first character
+ * @param  {String} input The input string
+ * @return {String}       Capitalized string
+ */
+var capitalize = function (string) {
+    return string && string[0].toUpperCase() + string.slice(1);
+};
+
+/**
+ * Check if an element is inside a specifc array
+ * @param  {String} The value to search for
+ * @param  {Array} The array to search in
+ * @return {Boolean}
+ */
+function isInArray(value, array) {
+  return array.indexOf(value) > -1;
+}
