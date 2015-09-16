@@ -100,30 +100,30 @@ $(document).ready(function(){
 
 /**
  * Get the value of a querystring
- * @param  {String} field The field to get the value of
- * @param  {String} url   The URL to get the value from (optional)
- * @return {String}       The field value
+ * @param  {String} The field to get the value of
+ * @param  {String} The URL to get the value from (optional)
+ * @return {String} The field value
  */
 var getQueryString = function ( field, url ) {
-    var href = url ? url : window.location.href;
-    var reg = new RegExp( '[?&]' + field + '=([^&#]*)', 'i' );
-    var string = reg.exec(href);
-    return string ? string[1] : null;
+  var href = url ? url : window.location.href;
+  var reg = new RegExp( '[?&]' + field + '=([^&#]*)', 'i' );
+  var string = reg.exec(href);
+  return string ? string[1] : null;
 };
 
 /**
  * Returns the first character just with a capitalized first character
- * @param  {String} input The input string
- * @return {String}       Capitalized string
+ * @param  {String} The input string
+ * @return {String} Capitalized string
  */
 var capitalize = function (string) {
-    return string && string[0].toUpperCase() + string.slice(1);
+  return string && string[0].toUpperCase() + string.slice(1);
 };
 
 /**
  * Check if an element is inside a specifc array
  * @param  {String} The value to search for
- * @param  {Array} The array to search in
+ * @param  {Array}  The array to search in
  * @return {Boolean}
  */
 function isInArray(value, array) {
@@ -133,10 +133,10 @@ function isInArray(value, array) {
 /**
  * Function to load and store configuration file asynchronous
  * @param  {Function} callback
- * @return {Object} configuration object
+ * @return {Object}   configuration object
  */
 function loadConfigFile(callback){
   $.getJSON('config.json', function(json, textStatus) {
-      callback(json);
+    callback(json);
   });
 }
