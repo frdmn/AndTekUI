@@ -4,11 +4,14 @@ bower_components
 
 ### AndTekUI
 config.json
+# JavaScript
 assets/js/*.js
 !assets/js/app.js
+# Sass / CSS
 assets/css/style.css
 assets/css/framework7/*
 !assets/css/framework7/.gitkeep
+# Images
 assets/img/*
 !assets/img/.gitkeep
 # Fonts
