@@ -39,7 +39,7 @@ $(document).ready(function(){
       '<li>' +
       '  <div class="item-content">' +
       '    <div class="item-inner">' +
-      '      <div class="item-title label">No handset passed</div>' +
+      '      <div class="item-title label">No handset address passed</div>' +
       '    </div>' +
       '  </div>' +
       '</li>'
@@ -76,7 +76,7 @@ $(document).ready(function(){
         '<li>' +
         '  <div class="item-content">' +
         '    <div class="item-inner">' +
-        '      <div class="item-title label">No queue available</div>' +
+        '      <div class="item-title label">No queues available for "' + deviceMac + '"</div>' +
         '    </div>' +
         '  </div>' +
         '</li>'
