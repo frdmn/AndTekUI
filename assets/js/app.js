@@ -23,87 +23,79 @@ $(document).ready(function(){
   }
 
   // Load current configuration file synchronously
-  $.ajax({
-    type: 'GET',
-    url: 'config.json',
-    dataType: 'json',
-    success: function(json) {
-      config = json;
-    },
-    async: false
-  });
-
-  // Check for declared deviceMac variable... if it doesn't exist, no MAC was passed => show error in dashboard (view-1)
-  if (!deviceMac) {
-    $('#view-1 ul').html(
-      '<li>' +
-      '  <div class="item-content">' +
-      '    <div class="item-inner">' +
-      '      <div class="item-title label">No handset address passed</div>' +
-      '    </div>' +
-      '  </div>' +
-      '</li>'
-    );
-  } else {
-    // Get rid of "Loading ..." dummy entry
-    $('#view-1 ul').html('');
-    // For each agent in configuration ...
-    for (var queue in config.queues) {
-      if (config.agents[deviceMac] && isInArray(config.queues[queue], config.agents[deviceMac].queues)) {
-        $('#view-1 ul').append(
-          '<li>' +
-          '  <div class="item-content">' +
-          '    <div class="item-inner">' +
-          '      <div class="item-title label">' + capitalize(queue) + '</div>' +
-          '      <div class="item-after">' +
-          '        <div class="item-input">' +
-          '          <label class="label-switch">' +
-          '            <input type="checkbox" disabled="disabled">' +
-          '            <div class="checkbox"></div>' +
-          '          </label>' +
-          '        </div>' +
-          '      </div>' +
-          '    </div>' +
-          '  </div>' +
-          '</li>'
-        );
-      }
-    }
-
-    // Check if there are any queues for current MAC
-    if ($('#view-1 ul li').length < 1) {
+  loadConfigFile(function(config){
+    // Check for declared deviceMac variable... if it doesn't exist, no MAC was passed => show error in dashboard (view-1)
+    if (!deviceMac) {
       $('#view-1 ul').html(
         '<li>' +
         '  <div class="item-content">' +
         '    <div class="item-inner">' +
-        '      <div class="item-title label">No queues available for "' + deviceMac + '"</div>' +
+        '      <div class="item-title label">No handset address passed</div>' +
         '    </div>' +
         '  </div>' +
         '</li>'
       );
+    } else {
+      // Get rid of "Loading ..." dummy entry
+      $('#view-1 ul').html('');
+      // For each agent in configuration ...
+      for (var queue in config.queues) {
+        if (config.agents[deviceMac] && isInArray(config.queues[queue], config.agents[deviceMac].queues)) {
+          $('#view-1 ul').append(
+            '<li>' +
+            '  <div class="item-content">' +
+            '    <div class="item-inner">' +
+            '      <div class="item-title label">' + capitalize(queue) + '</div>' +
+            '      <div class="item-after">' +
+            '        <div class="item-input">' +
+            '          <label class="label-switch">' +
+            '            <input type="checkbox" disabled="disabled">' +
+            '            <div class="checkbox"></div>' +
+            '          </label>' +
+            '        </div>' +
+            '      </div>' +
+            '    </div>' +
+            '  </div>' +
+            '</li>'
+          );
+        }
+      }
 
+      // Check if there are any queues for current MAC
+      if ($('#view-1 ul li').length < 1) {
+        $('#view-1 ul').html(
+          '<li>' +
+          '  <div class="item-content">' +
+          '    <div class="item-inner">' +
+          '      <div class="item-title label">No queues available for "' + deviceMac + '"</div>' +
+          '    </div>' +
+          '  </div>' +
+          '</li>'
+        );
+
+      }
     }
-  }
 
-  // Get rid of "Loading ..." dummy entry
-  $('#view-2 ul').html('');
-  // Populate "agents" view for each agent in configuration ...
-  for (var agent in config.agents) {
-    $('#view-2 ul').append(
-      '<li class="item-content">' +
-      '  <div class="item-media"><i class="fa fa-user"></i></div>' +
-      '  <div class="item-inner">' +
-      '    <div class="item-title">' + config.agents[agent].name + '</div>' +
-      '    <div class="item-after">' +
-      '      <label class="label-switch">' +
-      '        <input type="checkbox" disabled="disabled">' +
-      '        <div class="checkbox"></div>' +
-      '      </label>' +
-      '    </div>' +
-      '  </div>' +
-      '</li>'
-    );
-  }
+    // Get rid of "Loading ..." dummy entry
+    $('#view-2 ul').html('');
+    // Populate "agents" view for each agent in configuration ...
+    for (var agent in config.agents) {
+      $('#view-2 ul').append(
+        '<li class="item-content">' +
+        '  <div class="item-media"><i class="fa fa-user"></i></div>' +
+        '  <div class="item-inner">' +
+        '    <div class="item-title">' + config.agents[agent].name + '</div>' +
+        '    <div class="item-after">' +
+        '      <label class="label-switch">' +
+        '        <input type="checkbox" disabled="disabled">' +
+        '        <div class="checkbox"></div>' +
+        '      </label>' +
+        '    </div>' +
+        '  </div>' +
+        '</li>'
+      );
+    }
+  });
 });
 
 /**
@@ -136,4 +128,15 @@ var capitalize = function (string) {
  */
 function isInArray(value, array) {
   return array.indexOf(value) > -1;
+}
+
+/**
+ * Function to load and store configuration file asynchronous
+ * @param  {Function} callback
+ * @return {Object} configuration object
+ */
+function loadConfigFile(callback){
+  $.getJSON('config.json', function(json, textStatus) {
+      callback(json);
+  });
 }
