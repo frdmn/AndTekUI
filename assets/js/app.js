@@ -10,7 +10,7 @@ var deviceMac;
 
 // Wait until jQuery is loaded...
 $(document).ready(function(){
-  // Check if ""?mac=XXX" is set in URL
+  // Check if "?mac=XXX" is set in URL
   if (!getQueryString('mac')) {
     $('.content-block.info').html(
       '<p>Couldn\'t find passed handset MAC address in URL querystring. Make sure you\'ve open this web app like:</p>' +
@@ -132,8 +132,8 @@ function isInArray(value, array) {
 
 /**
  * Function to load and store configuration file asynchronous
- * @param  {Function} callback
- * @return {Object}   configuration object
+ * @param  {Function} Callback
+ * @return {Object}   Configuration object
  */
 function loadConfigFile(callback){
   $.getJSON('config.json', function(json, textStatus) {
