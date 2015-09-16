@@ -1,0 +1,21 @@
+{
+  "queues": {
+    "intern": 2,
+    "extern": 1
+  },
+  "agents": {
+    "004321ABCDEF": {
+      "name": "John Doe",
+      "queues": [
+        1,
+        2
+      ]
+    },
+    "00ABCDEF4321": {
+      "name": "Jane Doe",
+      "queues": [
+        2
+      ]
+    }
+  }
+}

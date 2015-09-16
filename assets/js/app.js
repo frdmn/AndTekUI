@@ -18,26 +18,34 @@ $(document).ready(function(){
     );
   }
 
-  // Parse agents from JSON
-  $.getJSON('agents.json', function(agents) {
-    // Get rid of "Loading ..." dummy entry
-    $('#view-2 ul').html('');
-    // For each agent ...
-    for (var agent in agents) {
-      $('#view-2 ul').append(
-        '<li class="item-content">' +
-        '  <div class="item-media"><i class="fa fa-user"></i></div>' +
-        '  <div class="item-inner">' +
-        '    <div class="item-title">' + agent + '</div>' +
-        '    <div class="item-after">' +
-        '      <i class="fa fa-circle ' + (agents[agent].internal ? 'green' : 'red') + '"></i>' +
-        '      <i class="fa fa-circle ' + (agents[agent].external ? 'green' : 'red') + '"></i>' +
-        '    </div>' +
-        '  </div>' +
-        '</li>'
-      );
-    }
+  // Load current configuration file synchronously
+  $.ajax({
+    type: 'GET',
+    url: 'config.json',
+    dataType: 'json',
+    success: function(json) {
+      config = json;
+    },
+    async: false
   });
+
+  // Get rid of "Loading ..." dummy entry
+  $('#view-2 ul').html('');
+  // For each agent in configuration ...
+  for (var agent in config.agents) {
+    console.log(agent);
+    $('#view-2 ul').append(
+      '<li class="item-content">' +
+      '  <div class="item-media"><i class="fa fa-user"></i></div>' +
+      '  <div class="item-inner">' +
+      '    <div class="item-title">' + config.agents[agent].name + '</div>' +
+      '    <div class="item-after">' +
+      '      status' +
+      '    </div>' +
+      '  </div>' +
+      '</li>'
+    );
+  }
 });
 
 /**

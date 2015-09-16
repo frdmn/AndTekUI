@@ -3,7 +3,7 @@ node_modules
 bower_components
 
 ### AndTekUI
-agents.json
+config.json
 assets/js/*.js
 !assets/js/app.js
 assets/css/style.css
