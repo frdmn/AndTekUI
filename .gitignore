@@ -11,3 +11,6 @@ assets/css/framework7/*
 !assets/css/framework7/.gitkeep
 assets/img/*
 !assets/img/.gitkeep
+# Fonts
+assets/fonts/*
+!assets/fonts/.gitkeep

@@ -4,8 +4,10 @@
 
 // Framework7
 @import "framework7/framework7.ios";
-// @import "framework7/framework7.ios.rtl";
 @import "framework7/framework7.ios.colors";
+
+// FontAwesome
+@import "../../bower_components/fontawesome/scss/font-awesome";
 
 // Main CSS for our app
 @import "app";

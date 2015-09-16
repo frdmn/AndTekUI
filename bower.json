@@ -23,6 +23,7 @@
   "dependencies": {
     "jquery": "~2.1.4",
     "framework7": "~1.2.0",
-    "modernizr": "~2.8.3"
+    "modernizr": "~2.8.3",
+    "fontawesome": "~4.4.0"
   }
 }

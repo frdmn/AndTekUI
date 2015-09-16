@@ -9,6 +9,7 @@ module.exports = function(grunt) {
     dirs: {
       bower: 'bower_components',
       css: 'assets/css',
+      fonts: 'assets/fonts',
       js: 'assets/js',
       images: 'assets/img',
       icons: 'assets/icons'
@@ -56,6 +57,7 @@ module.exports = function(grunt) {
           { expand: true, cwd: '<%= dirs.bower %>/framework7/dist/css/', src: [ 'framework7.ios.rtl.css' ], dest: '<%= dirs.css %>/framework7', rename: function(dest) { return dest + '/framework7.ios.rtl.scss'; } },
           { expand: true, cwd: '<%= dirs.bower %>/framework7/dist/css/', src: [ 'framework7.ios.colors.css' ], dest: '<%= dirs.css %>/framework7', rename: function(dest) { return dest + '/framework7.ios.colors.scss'; } },
           { expand: true, cwd: '<%= dirs.bower %>/framework7/dist/img/', src: [ '**' ], dest: '<%= dirs.images %>' },
+          { expand: true, cwd: '<%= dirs.bower %>/fontawesome/fonts/', src: [ '**' ], dest: '<%= dirs.fonts %>' },
           { expand: true, cwd: '<%= dirs.bower %>/modernizr/', src: [ 'modernizr.js' ], dest: '<%= dirs.js %>', rename: function(dest) { return dest + '/modernizr.js'; } }
         ]
       }
