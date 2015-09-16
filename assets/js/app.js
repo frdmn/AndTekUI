@@ -95,7 +95,10 @@ $(document).ready(function(){
       '  <div class="item-inner">' +
       '    <div class="item-title">' + config.agents[agent].name + '</div>' +
       '    <div class="item-after">' +
-      '      status' +
+      '      <label class="label-switch">' +
+      '        <input type="checkbox" disabled="disabled">' +
+      '        <div class="checkbox"></div>' +
+      '      </label>' +
       '    </div>' +
       '  </div>' +
       '</li>'
