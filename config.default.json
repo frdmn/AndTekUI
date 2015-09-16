@@ -6,16 +6,11 @@
   "agents": {
     "004321ABCDEF": {
       "name": "John Doe",
-      "queues": [
-        1,
-        2
-      ]
+      "queues": [ 1, 2 ]
     },
     "00ABCDEF4321": {
       "name": "Jane Doe",
-      "queues": [
-        2
-      ]
+      "queues": [ 2 ]
     }
   }
 }
