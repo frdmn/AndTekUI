@@ -1,5 +1,6 @@
 <?php
 
+$config = json_decode(file_get_contents(__DIR__.'/../config.json'), true);
 
 /**
  * Returns the current status of an agent in a specific queue
