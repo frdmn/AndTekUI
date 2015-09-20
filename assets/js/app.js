@@ -67,6 +67,11 @@ $(document).ready(function(){
 
   // Load current configuration file synchronously
   loadConfigFile(function(config){
+
+    /*
+     * "dashboard" view
+     */
+
     // Check for declared deviceMac variable... if it doesn't exist, no MAC was passed => show error in dashboard (view-1)
     if (!deviceMac) {
       $('#view-1 ul').html(
@@ -118,6 +123,10 @@ $(document).ready(function(){
 
       }
     }
+
+    /*
+     * "agents" view
+     */
 
     // Get rid of "Loading ..." dummy entry
     $('#view-2 ul').html('');
