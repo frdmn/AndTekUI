@@ -129,10 +129,7 @@ $(document).ready(function(){
         '  <div class="item-inner">' +
         '    <div class="item-title">' + config.agents[agent].name + '</div>' +
         '    <div class="item-after">' +
-        '      <label class="label-switch">' +
-        '        <input type="checkbox" disabled="disabled">' +
-        '        <div class="checkbox"></div>' +
-        '      </label>' +
+        '      <i class="fa fa-circle-thin red"></i>' +
         '    </div>' +
         '  </div>' +
         '</li>'
