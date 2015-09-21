@@ -43,6 +43,21 @@ function loadConfigFile(callback){
   });
 }
 
+/**
+ * Function to render the agents status in the view
+ * @param  {Object}   Configuration object
+ * @param  {Function} Callback
+ * @return {Boolean}  true
+ */
+function refreshAgentsStatusView(config, callback){
+  for (var agent in config.agents) {
+    $('*[data-mac="' + agent + '"] .item-after .fa');
+    // Todo:
+    // For each agent, check actual status then adjust FontAwesome icon based on response
+  }
+  callback(true);
+}
+
 var AndTekUI = new Framework7();
 var $$ = Dom7;
 
@@ -135,7 +150,7 @@ $(document).ready(function(){
       $('#view-2 ul').append(
         '<li class="item-content">' +
         '  <div class="item-media"><i class="fa fa-user"></i></div>' +
-        '  <div class="item-inner">' +
+        '  <div class="item-inner" data-user="' + config.agents[agent].name + '" data-mac="' + agent + '">' +
         '    <div class="item-title">' + config.agents[agent].name + '</div>' +
         '    <div class="item-after">' +
         '      <i class="fa fa-circle-thin red"></i>' +
@@ -144,5 +159,9 @@ $(document).ready(function(){
         '</li>'
       );
     }
+
+    refreshAgentsStatusView(config, function(){
+      console.log('done');
+    });
   });
 });
