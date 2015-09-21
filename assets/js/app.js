@@ -152,12 +152,16 @@ $(document).ready(function(){
         '  <div class="item-media"><i class="fa fa-user"></i></div>' +
         '  <div class="item-inner" data-user="' + config.agents[agent].name + '" data-mac="' + agent + '">' +
         '    <div class="item-title">' + config.agents[agent].name + '</div>' +
-        '    <div class="item-after">' +
-        '      <i class="fa fa-circle-thin red"></i>' +
+        '    <div class="item-after queues">' +
         '    </div>' +
         '  </div>' +
         '</li>'
       );
+
+      // Add status icon for each assigned queue
+      for(var agentQueue in config.agents[agent].queues){
+        $('#view-2 ul *[data-mac="' + agent + '"] .queues').append('<i data-queue="' + agentQueue + '" class="fa fa-circle-thin red"></i>');
+      }
     }
 
     refreshAgentsStatusView(config, function(){
