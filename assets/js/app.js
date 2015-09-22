@@ -1,5 +1,7 @@
 // Newline below because parent script doesn't use EOF :(
 
+/* jshint loopfunc:true */
+
 /**
  * Get the value of a querystring
  * @param  {String} The field to get the value of
@@ -43,6 +45,21 @@ function loadConfigFile(callback){
   });
 }
 
+
+/**
+ * Returns the status of an agent in a specific queue
+ * @param  {String}   agentMacAddress
+ * @param  {Integer}  queueId
+ * @param  {Function} callback
+ * @return {Boolean}
+ */
+function getCurrentStatus(agentMacAddress, queueId, callback){
+  $.get( 'api/get/?mac=' + agentMacAddress + '&queue=' + queueId, function( data ) {
+    var json = $.parseJSON(data);
+    callback(json.data.status);
+  });
+}
+
 /**
  * Function to render the agents status in the view
  * @param  {Object}   Configuration object
@@ -51,9 +68,17 @@ function loadConfigFile(callback){
  */
 function refreshAgentsStatusView(config, callback){
   for (var agent in config.agents) {
-    $('*[data-mac="' + agent + '"] .item-after .fa');
-    // Todo:
-    // For each agent, check actual status then adjust FontAwesome icon based on response
+    $('*[data-mac="' + agent + '"] .item-after .fa').each(function(agentQueue){
+      var newAgent = agent,
+          newAgentQueueDom = $(this),
+          newAgentQueue = $(newAgentQueueDom).data('queue');
+
+      getCurrentStatus(newAgent, newAgentQueue, function(status){
+        if (status) {
+          $(newAgentQueueDom).removeClass('red').addClass('green');
+        }
+      });
+    });
   }
   callback(true);
 }
@@ -135,7 +160,6 @@ $(document).ready(function(){
           '  </div>' +
           '</li>'
         );
-
       }
     }
 
@@ -160,7 +184,7 @@ $(document).ready(function(){
 
       // Add status icon for each assigned queue
       for(var agentQueue in config.agents[agent].queues){
-        $('#view-2 ul *[data-mac="' + agent + '"] .queues').append('<i data-queue="' + agentQueue + '" class="fa fa-circle-thin red"></i>');
+        $('#view-2 ul *[data-mac="' + agent + '"] .queues').append('<i data-queue="' + config.agents[agent].queues[agentQueue] + '" class="fa fa-circle-thin red"></i>');
       }
     }
 
