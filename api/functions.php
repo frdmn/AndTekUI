@@ -11,7 +11,7 @@ $config = json_decode(file_get_contents(__DIR__.'/../config.json'), true);
 function getStatus($macAddress, $queueId) {
   global $config;
 
-  $apiUri = $config['andtek']['protocol'].'://'.$config['andtek']['hostname'].':'.$config['andtek']['port'].'/andphone/ACDService?queue='.$queueId.'&setsec=-1&page=available&dev='.$macAddress;
+  $apiUri = $config['server']['protocol'].'://'.$config['server']['hostname'].':'.$config['server']['port'].'/andphone/ACDService?queue='.$queueId.'&setsec=-1&page=available&dev='.$macAddress;
 
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $apiUri);
@@ -53,7 +53,7 @@ function setStatus($macAddress, $queueId, $queueStatus){
 
   // Prepare curl request
   $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, $config['andtek']['protocol'].'://'.$config['andtek']['hostname'].':'.$config['andtek']['port'].'/andphone/ACDService?queue='.$queueId.'&setsec=-1&state='.$queueStatusInt.'&page=available&dev='.$macAddress);
+  curl_setopt($ch, CURLOPT_URL, $config['server']['protocol'].'://'.$config['server']['hostname'].':'.$config['server']['port'].'/andphone/ACDService?queue='.$queueId.'&setsec=-1&state='.$queueStatusInt.'&page=available&dev='.$macAddress);
   curl_setopt($ch, CURLOPT_HEADER, 0);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
   curl_setopt($ch, CURLOPT_TIMEOUT, 10);

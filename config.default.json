@@ -3,7 +3,7 @@
     "intern": 2,
     "extern": 1
   },
-  "andtek": {
+  "server": {
     "protocol": "http",
     "hostname": "192.168.1.100",
     "port": "8080"
