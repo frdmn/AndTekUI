@@ -11,10 +11,10 @@ $config = json_decode(file_get_contents(__DIR__.'/../config.json'), true);
 function getStatus($macAddress, $queueId) {
   global $config;
 
-  $macAddress = $config['andtek']['protocol'].'://'.$config['andtek']['hostname'].':'.$config['andtek']['port'].'/andphone/ACDService?queue='.$queueId.'&setsec=-1&page=available&dev='.$macAddress;
+  $apiUri = $config['andtek']['protocol'].'://'.$config['andtek']['hostname'].':'.$config['andtek']['port'].'/andphone/ACDService?queue='.$queueId.'&setsec=-1&page=available&dev='.$macAddress;
 
   $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, $macAddress);
+  curl_setopt($ch, CURLOPT_URL, $apiUri);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
   $xmlresponse = curl_exec($ch);
   curl_close($ch);
