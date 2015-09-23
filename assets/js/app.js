@@ -91,8 +91,8 @@ var AndTekUI = new Framework7({
 
 var $$ = Dom7;
 
-var view1 = AndTekUI.addView('#view-1');
-var view2 = AndTekUI.addView('#view-2');
+var view1 = AndTekUI.addView('#view-1'),
+    view2 = AndTekUI.addView('#view-2');
 
 var deviceMac;
 
@@ -173,6 +173,7 @@ $(document).ready(function(){
           '  </div>' +
           '</li>'
         );
+        AndTekUI.alert('No queues available for "' + deviceMac);
       }
     }
 
@@ -201,6 +202,7 @@ $(document).ready(function(){
       }
     }
 
+    // Refresh current agents statuses
     refreshAgentsStatusView(config);
   });
 });
