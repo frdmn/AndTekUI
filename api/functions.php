@@ -83,6 +83,30 @@ function setStatus($macAddress, $queueId, $queueStatus){
 }
 
 /**
+ * Check AndTek server connection
+ * @return {Boolean} True if server connection successful established
+ */
+function testServerConnection(){
+  global $config;
+
+  // Prepare curl request
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $config['server']['protocol'].'://'.$config['server']['hostname'].':'.$config['server']['port'].'/andphone/ACDService/');
+  curl_setopt($ch, CURLOPT_HEADER, 0);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+  $output = curl_exec($ch);
+  $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+  curl_close($ch);
+
+  if ($httpCode !== 200) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+/**
  * Print JSON and die
  * @param {Object} $json PHP object
  * @return {Null}
