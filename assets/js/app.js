@@ -45,7 +45,6 @@ function loadConfigFile(callback){
   });
 }
 
-
 /**
  * Returns the status of an agent in a specific queue
  * @param  {String}   agentMacAddress
@@ -98,7 +97,6 @@ var deviceMac;
 
 // Wait until jQuery is loaded...
 $(document).ready(function(){
-
   // Check debug state
   if (!getQueryString('debug')) {
     ConsoleLogViewer.logEnabled = false;
@@ -117,92 +115,110 @@ $(document).ready(function(){
     deviceMac = getQueryString('mac');
   }
 
-  // Load current configuration file synchronously
-  loadConfigFile(function(config){
+  // Check "api/status" endpoint for successful AndTek server connection
+  $.getJSON('api/status', function(json, textStatus) {
+    // If server connection is established ...
+    if (json.data.status) {
+      // Load current configuration file synchronously
+      loadConfigFile(function(config){
 
-    /*
-     * "dashboard" view
-     */
+        /*
+         * "dashboard" view
+         */
 
-    // Check for declared deviceMac variable... if it doesn't exist, no MAC was passed => show error in dashboard (view-1)
-    if (!deviceMac) {
-      AndTekUI.alert('No handset available.');
-      $('#view-1 ul').html(
-        '<li>' +
-        '  <div class="item-content">' +
-        '    <div class="item-inner">' +
-        '      <div class="item-title label">No handset address passed</div>' +
-        '    </div>' +
-        '  </div>' +
-        '</li>'
-      );
-    } else {
-      // Get rid of "Loading ..." dummy entry
-      $('#view-1 ul').html('');
-      // For each agent in configuration ...
-      for (var queue in config.queues) {
-        if (config.agents[deviceMac] && isInArray(config.queues[queue], config.agents[deviceMac].queues)) {
-          $('#view-1 ul').append(
+        // Check for declared deviceMac variable... if it doesn't exist, no MAC was passed => show error in dashboard (view-1)
+        if (!deviceMac) {
+          AndTekUI.alert('No handset available.');
+          $('#view-1 ul').html(
             '<li>' +
             '  <div class="item-content">' +
             '    <div class="item-inner">' +
-            '      <div class="item-title label">' + capitalize(queue) + '</div>' +
-            '      <div class="item-after">' +
-            '        <div class="item-input">' +
-            '          <label class="label-switch">' +
-            '            <input type="checkbox" disabled="disabled">' +
-            '            <div class="checkbox"></div>' +
-            '          </label>' +
-            '        </div>' +
-            '      </div>' +
+            '      <div class="item-title label">No handset address passed</div>' +
             '    </div>' +
             '  </div>' +
             '</li>'
           );
+        } else {
+          // Get rid of "Loading ..." dummy entry
+          $('#view-1 ul').html('');
+          // For each agent in configuration ...
+          for (var queue in config.queues) {
+            if (config.agents[deviceMac] && isInArray(config.queues[queue], config.agents[deviceMac].queues)) {
+              $('#view-1 ul').append(
+                '<li>' +
+                '  <div class="item-content">' +
+                '    <div class="item-inner">' +
+                '      <div class="item-title label" data-queue="' + config.queues[queue] + '">' + capitalize(queue) + '</div>' +
+                '      <div class="item-after">' +
+                '        <div class="item-input">' +
+                '          <label class="label-switch">' +
+                '            <input type="checkbox" disabled="disabled">' +
+                '            <div class="checkbox"></div>' +
+                '          </label>' +
+                '        </div>' +
+                '      </div>' +
+                '    </div>' +
+                '  </div>' +
+                '</li>'
+              );
+            }
+          }
+
+          // Check if there are any queues for current MAC
+          if ($('#view-1 ul li').length < 1) {
+            $('#view-1 ul').html(
+              '<li>' +
+              '  <div class="item-content">' +
+              '    <div class="item-inner">' +
+              '      <div class="item-title label">No queues available for "' + deviceMac + '"</div>' +
+              '    </div>' +
+              '  </div>' +
+              '</li>'
+            );
+            AndTekUI.alert('No queues available for "' + deviceMac);
+          }
+
+          // Get current queue status in "dashboard" view
+          $('#view-1 ul li').each(function(){
+            // console.log($(this).data());
+            // $.get( 'api/get/?mac=' + deviceMac + '&queue=' + $(this).data('queue'), function( data ) {
+            //   alert( data );
+            // });
+          });
         }
-      }
 
-      // Check if there are any queues for current MAC
-      if ($('#view-1 ul li').length < 1) {
-        $('#view-1 ul').html(
-          '<li>' +
-          '  <div class="item-content">' +
-          '    <div class="item-inner">' +
-          '      <div class="item-title label">No queues available for "' + deviceMac + '"</div>' +
-          '    </div>' +
-          '  </div>' +
-          '</li>'
-        );
-        AndTekUI.alert('No queues available for "' + deviceMac);
-      }
+        /*
+         * "agents" view
+         */
+
+        // Get rid of "Loading ..." dummy entry
+        $('#view-2 ul').html('');
+        // Populate "agents" view for each agent in configuration ...
+        for (var agent in config.agents) {
+          $('#view-2 ul').append(
+            '<li class="item-content">' +
+            '  <div class="item-media"><i class="fa fa-user"></i></div>' +
+            '  <div class="item-inner" data-user="' + config.agents[agent].name + '" data-mac="' + agent + '">' +
+            '    <div class="item-title">' + config.agents[agent].name + '</div>' +
+            '    <div class="item-after queues">' +
+            '    </div>' +
+            '  </div>' +
+            '</li>'
+          );
+
+          // Add status icon for each assigned queue
+          for(var agentQueue in config.agents[agent].queues){
+            $('#view-2 ul *[data-mac="' + agent + '"] .queues').append('<i data-queue="' + config.agents[agent].queues[agentQueue] + '" class="fa fa-circle-thin red"></i>');
+          }
+        }
+
+        // Refresh current agents statuses
+        refreshAgentsStatusView(config);
+      });
+    } else { // otherwise return error message
+      var message = "Couldn't establish connection to AndTek server.";
+      console.log(message);
+      AndTekUI.alert(message);
     }
-
-    /*
-     * "agents" view
-     */
-
-    // Get rid of "Loading ..." dummy entry
-    $('#view-2 ul').html('');
-    // Populate "agents" view for each agent in configuration ...
-    for (var agent in config.agents) {
-      $('#view-2 ul').append(
-        '<li class="item-content">' +
-        '  <div class="item-media"><i class="fa fa-user"></i></div>' +
-        '  <div class="item-inner" data-user="' + config.agents[agent].name + '" data-mac="' + agent + '">' +
-        '    <div class="item-title">' + config.agents[agent].name + '</div>' +
-        '    <div class="item-after queues">' +
-        '    </div>' +
-        '  </div>' +
-        '</li>'
-      );
-
-      // Add status icon for each assigned queue
-      for(var agentQueue in config.agents[agent].queues){
-        $('#view-2 ul *[data-mac="' + agent + '"] .queues').append('<i data-queue="' + config.agents[agent].queues[agentQueue] + '" class="fa fa-circle-thin red"></i>');
-      }
-    }
-
-    // Refresh current agents statuses
-    refreshAgentsStatusView(config);
   });
 });
