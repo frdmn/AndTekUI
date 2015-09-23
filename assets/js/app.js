@@ -63,10 +63,9 @@ function getCurrentStatus(agentMacAddress, queueId, callback){
 /**
  * Function to render the agents status in the view
  * @param  {Object}   Configuration object
- * @param  {Function} Callback
  * @return {Boolean}  true
  */
-function refreshAgentsStatusView(config, callback){
+function refreshAgentsStatusView(config){
   for (var agent in config.agents) {
     $('*[data-mac="' + agent + '"] .item-after .fa').each(function(agentQueue){
       var newAgent = agent,
@@ -80,7 +79,7 @@ function refreshAgentsStatusView(config, callback){
       });
     });
   }
-  callback(true);
+  return true;
 }
 
 var AndTekUI = new Framework7({
@@ -199,8 +198,6 @@ $(document).ready(function(){
       }
     }
 
-    refreshAgentsStatusView(config, function(){
-      console.log('Done refreshing queue status of agents.');
-    });
+    refreshAgentsStatusView(config);
   });
 });
