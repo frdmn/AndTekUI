@@ -24,6 +24,7 @@
     "jquery": "~2.1.4",
     "framework7": "~1.2.0",
     "modernizr": "~2.8.3",
-    "fontawesome": "~4.4.0"
+    "fontawesome": "~4.4.0",
+    "console-log-viewer": "https://raw.githubusercontent.com/markknol/console-log-viewer/gh-pages/console-log-viewer.js"
   }
 }

@@ -93,6 +93,13 @@ var deviceMac;
 
 // Wait until jQuery is loaded...
 $(document).ready(function(){
+
+  // Check debug state
+  if (!getQueryString('debug')) {
+    ConsoleLogViewer.logEnabled = false;
+    $('#debug_console').remove();
+  }
+
   // Check if "?mac=XXX" is set in URL
   if (!getQueryString('mac')) {
     $('.content-block.info').html(

@@ -72,6 +72,7 @@ module.exports = function(grunt) {
         src: [
           '<%= dirs.bower %>/jquery/dist/jquery.js',
           '<%= dirs.bower %>/framework7/dist/js/framework7.js',
+          '<%= dirs.bower %>/console-log-viewer/index.js',
           '<%= dirs.js %>/*.js',
           '!<%= dirs.js %>/modernizr.js',
           '!<%= dirs.js %>/build.js'
