@@ -83,7 +83,10 @@ function refreshAgentsStatusView(config, callback){
   callback(true);
 }
 
-var AndTekUI = new Framework7();
+var AndTekUI = new Framework7({
+  modalTitle: "AndTekUI"
+});
+
 var $$ = Dom7;
 
 var view1 = AndTekUI.addView('#view-1');
@@ -121,6 +124,7 @@ $(document).ready(function(){
 
     // Check for declared deviceMac variable... if it doesn't exist, no MAC was passed => show error in dashboard (view-1)
     if (!deviceMac) {
+      AndTekUI.alert('No handset available.');
       $('#view-1 ul').html(
         '<li>' +
         '  <div class="item-content">' +
@@ -196,7 +200,7 @@ $(document).ready(function(){
     }
 
     refreshAgentsStatusView(config, function(){
-      console.log('done');
+      console.log('Done refreshing queue status of agents.');
     });
   });
 });
