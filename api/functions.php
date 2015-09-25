@@ -91,7 +91,7 @@ function testServerConnection(){
 
   // Prepare curl request
   $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, $config['server']['protocol'].'://'.$config['server']['hostname'].':'.$config['server']['port'].'/andphone/ACDService/');
+  curl_setopt($ch, CURLOPT_URL, $config['server']['protocol'].'://'.$config['server']['hostname'].':'.$config['server']['port'].'/andphone/');
   curl_setopt($ch, CURLOPT_HEADER, 0);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
   curl_setopt($ch, CURLOPT_TIMEOUT, 3);
