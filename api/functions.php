@@ -94,7 +94,7 @@ function testServerConnection(){
   curl_setopt($ch, CURLOPT_URL, $config['server']['protocol'].'://'.$config['server']['hostname'].':'.$config['server']['port'].'/andphone/');
   curl_setopt($ch, CURLOPT_HEADER, 0);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+  curl_setopt($ch, CURLOPT_TIMEOUT, $config['server']['timeout']);
   $output = curl_exec($ch);
   $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
   curl_close($ch);
