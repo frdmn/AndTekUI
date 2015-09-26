@@ -152,7 +152,7 @@ $(document).ready(function(){
                 '      <div class="item-after">' +
                 '        <div class="item-input">' +
                 '          <label class="label-switch">' +
-                '            <input type="checkbox" disabled="disabled">' +
+                '            <input type="checkbox">' +
                 '            <div class="checkbox"></div>' +
                 '          </label>' +
                 '        </div>' +
@@ -180,10 +180,15 @@ $(document).ready(function(){
 
           // Get current queue status in "dashboard" view
           $('#view-1 ul li').each(function(){
-            // console.log($(this).data());
-            // $.get( 'api/get/?mac=' + deviceMac + '&queue=' + $(this).data('queue'), function( data ) {
-            //   alert( data );
-            // });
+            var queueId = $('.item-title', this).data('queue'),
+                liDom = $(this);
+            $.getJSON( 'api/get/?mac=' + deviceMac + '&queue=' + queueId, function( json ) {
+              if (json.data.status) {
+                $('input', liDom).prop('checked', true);
+              } else {
+                $('input', liDom).prop('checked', false);
+              }
+            });
           });
         }
 
