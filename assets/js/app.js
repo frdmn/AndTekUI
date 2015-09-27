@@ -76,6 +76,7 @@ function refreshAgentsStatusView(config){
           $(newAgentQueueDom).removeClass('red').addClass('green');
           console.log('Agent "' + config.agents[newAgent].name + '" IS logged in "' + newAgentQueue + '" queue');
         } else {
+          $(newAgentQueueDom).removeClass('green').addClass('red');
           console.log('Agent "' + config.agents[newAgent].name + '" is NOT logged in "' + newAgentQueue + '" queue');
         }
       });
