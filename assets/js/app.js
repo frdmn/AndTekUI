@@ -192,6 +192,19 @@ $(document).ready(function(){
           });
         }
 
+        // When user changes the checkboxes / request a status change for a specific queue
+        $(':checkbox').change(function() {
+          var currentQueue = $(this).parent().parent().parent().siblings('.item-title').data('queue'),
+              currentStatus = $(this).is(":checked");
+
+          // Try to set said status via PHP API
+          $.getJSON('api/set/', {mac: deviceMac, queue: currentQueue, status: currentStatus}, function(json, textStatus) {
+            if (json.data.status) {
+              console.log('Agent "' + config.agents[deviceMac].name + '" is ' + (currentStatus ? 'NOW' : 'NOT')  + ' logged in queue "' + currentQueue + '"');
+            }
+          });
+        });
+
         /*
          * "agents" view
          */
