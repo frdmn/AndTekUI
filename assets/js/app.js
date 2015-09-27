@@ -222,8 +222,8 @@ $(document).ready(function(){
 
           // Try to set said status via PHP API
           $.getJSON('api/set/', {mac: deviceMac, queue: currentQueue, status: currentStatus}, function(json, textStatus) {
-            if (json.data.status) {
-              console.log('Agent "' + config.agents[deviceMac].name + '" is ' + (currentStatus ? 'NOW' : 'NOT')  + ' logged in queue "' + currentQueue + '"');
+            if (json.success) {
+              console.log('Agent "' + config.agents[deviceMac].name + '" is ' + (json.data.status ? 'NOW' : 'NOT')  + ' logged in queue "' + currentQueue + '"');
             }
           });
         });
