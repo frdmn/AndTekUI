@@ -85,6 +85,94 @@ function refreshAgentsStatusView(config){
   return true;
 }
 
+/**
+ * Function to render the dashboard view
+ * @param  {Object}   Configuration object
+ */
+function loadDashboardView(config){
+  // Get rid of "Loading ..." dummy entry
+  $('#view-1 ul').html('');
+  // For each agent in configuration ...
+  for (var queue in config.queues) {
+    if (config.agents[deviceMac] && isInArray(config.queues[queue], config.agents[deviceMac].queues)) {
+      $('#view-1 ul').append(
+        '<li>' +
+        '  <div class="item-content">' +
+        '    <div class="item-inner">' +
+        '      <div class="item-title label" data-queue="' + config.queues[queue] + '">' + capitalize(queue) + '</div>' +
+        '      <div class="item-after">' +
+        '        <div class="item-input">' +
+        '          <label class="label-switch">' +
+        '            <input type="checkbox">' +
+        '            <div class="checkbox"></div>' +
+        '          </label>' +
+        '        </div>' +
+        '      </div>' +
+        '    </div>' +
+        '  </div>' +
+        '</li>'
+      );
+    }
+  }
+
+  // Check if there are any queues for current MAC
+  if ($('#view-1 ul li').length < 1) {
+    $('#view-1 ul').html(
+      '<li>' +
+      '  <div class="item-content">' +
+      '    <div class="item-inner">' +
+      '      <div class="item-title label">No queues available for "' + deviceMac + '"</div>' +
+      '    </div>' +
+      '  </div>' +
+      '</li>'
+    );
+    AndTekUI.alert('No queues available for "' + deviceMac);
+  }
+
+  // Get current queue status in "dashboard" view
+  $('#view-1 ul li').each(function(){
+    var queueId = $('.item-title', this).data('queue'),
+        liDom = $(this); // Store <li> DOM in variable
+    // Get current queue status via PHP API
+    $.getJSON( 'api/get/?mac=' + deviceMac + '&queue=' + queueId, function( json ) {
+      // If "true" check checbox
+      if (json.data.status) {
+        $('input', liDom).prop('checked', true);
+      } else {
+        // Otherwise uncheck checkbox
+        $('input', liDom).prop('checked', false);
+      }
+    });
+  });
+}
+
+/**
+ * Function to render the agents view
+ * @param  {Object}   Configuration object
+ */
+function loadAgentsView(config){
+  // Get rid of "Loading ..." dummy entry
+  $('#view-2 ul').html('');
+  // Populate "agents" view for each agent in configuration ...
+  for (var agent in config.agents) {
+    $('#view-2 ul').append(
+      '<li class="item-content">' +
+      '  <div class="item-media"><i class="fa fa-user"></i></div>' +
+      '  <div class="item-inner" data-user="' + config.agents[agent].name + '" data-mac="' + agent + '">' +
+      '    <div class="item-title">' + config.agents[agent].name + '</div>' +
+      '    <div class="item-after queues">' +
+      '    </div>' +
+      '  </div>' +
+      '</li>'
+    );
+
+    // Add status icon for each assigned queue
+    for(var agentQueue in config.agents[agent].queues){
+      $('#view-2 ul *[data-mac="' + agent + '"] .queues').append('<i data-queue="' + config.agents[agent].queues[agentQueue] + '" class="fa fa-circle-thin red"></i>');
+    }
+  }
+}
+
 var AndTekUI = new Framework7({
   modalTitle: "AndTekUI"
 });
@@ -140,60 +228,7 @@ $(document).ready(function(){
             '</li>'
           );
         } else {
-          // Get rid of "Loading ..." dummy entry
-          $('#view-1 ul').html('');
-          // For each agent in configuration ...
-          for (var queue in config.queues) {
-            if (config.agents[deviceMac] && isInArray(config.queues[queue], config.agents[deviceMac].queues)) {
-              $('#view-1 ul').append(
-                '<li>' +
-                '  <div class="item-content">' +
-                '    <div class="item-inner">' +
-                '      <div class="item-title label" data-queue="' + config.queues[queue] + '">' + capitalize(queue) + '</div>' +
-                '      <div class="item-after">' +
-                '        <div class="item-input">' +
-                '          <label class="label-switch">' +
-                '            <input type="checkbox">' +
-                '            <div class="checkbox"></div>' +
-                '          </label>' +
-                '        </div>' +
-                '      </div>' +
-                '    </div>' +
-                '  </div>' +
-                '</li>'
-              );
-            }
-          }
-
-          // Check if there are any queues for current MAC
-          if ($('#view-1 ul li').length < 1) {
-            $('#view-1 ul').html(
-              '<li>' +
-              '  <div class="item-content">' +
-              '    <div class="item-inner">' +
-              '      <div class="item-title label">No queues available for "' + deviceMac + '"</div>' +
-              '    </div>' +
-              '  </div>' +
-              '</li>'
-            );
-            AndTekUI.alert('No queues available for "' + deviceMac);
-          }
-
-          // Get current queue status in "dashboard" view
-          $('#view-1 ul li').each(function(){
-            var queueId = $('.item-title', this).data('queue'),
-                liDom = $(this); // Store <li> DOM in variable
-            // Get current queue status via PHP API
-            $.getJSON( 'api/get/?mac=' + deviceMac + '&queue=' + queueId, function( json ) {
-              // If "true" check checbox
-              if (json.data.status) {
-                $('input', liDom).prop('checked', true);
-              } else {
-                // Otherwise uncheck checkbox
-                $('input', liDom).prop('checked', false);
-              }
-            });
-          });
+          loadDashboardView(config);
         }
 
         // When user changes the checkboxes / request a status change for a specific queue
@@ -209,6 +244,19 @@ $(document).ready(function(){
           });
         });
 
+        /* Pull to refresh */
+
+        var ptrDashboardContent = $$('div[data-page=index-1] .pull-to-refresh-content');
+
+        // Add 'refresh' listener on it
+        ptrDashboardContent.on('refresh', function (e) {
+          setTimeout(function () {
+            loadDashboardView(config);
+            // When loading done, we need to reset it
+            AndTekUI.pullToRefreshDone();
+          }, 500);
+        });
+
         // On click on "agents" tab bar icon
         $('a[href$="#view-2"]').click(function(){
           // Refresh current agents statuses
@@ -219,26 +267,34 @@ $(document).ready(function(){
          * "agents" view
          */
 
-        // Get rid of "Loading ..." dummy entry
-        $('#view-2 ul').html('');
-        // Populate "agents" view for each agent in configuration ...
-        for (var agent in config.agents) {
-          $('#view-2 ul').append(
-            '<li class="item-content">' +
-            '  <div class="item-media"><i class="fa fa-user"></i></div>' +
-            '  <div class="item-inner" data-user="' + config.agents[agent].name + '" data-mac="' + agent + '">' +
-            '    <div class="item-title">' + config.agents[agent].name + '</div>' +
-            '    <div class="item-after queues">' +
-            '    </div>' +
-            '  </div>' +
-            '</li>'
-          );
+         // If no deviceMac, replace <ul>'s
+         if (!deviceMac) {
+           $('#view-2 ul').html(
+             '<li>' +
+             '  <div class="item-content">' +
+             '    <div class="item-inner">' +
+             '      <div class="item-title label">No handset address passed</div>' +
+             '    </div>' +
+             '  </div>' +
+             '</li>'
+           );
+         } else {
+           loadAgentsView(config);
+         }
 
-          // Add status icon for each assigned queue
-          for(var agentQueue in config.agents[agent].queues){
-            $('#view-2 ul *[data-mac="' + agent + '"] .queues').append('<i data-queue="' + config.agents[agent].queues[agentQueue] + '" class="fa fa-circle-thin red"></i>');
-          }
-        }
+         /* Pull to refresh */
+
+         var ptrAgentsContent = $$('div[data-page=index-2] .pull-to-refresh-content');
+
+         // Add 'refresh' listener on it
+         ptrAgentsContent.on('refresh', function (e) {
+          setTimeout(function () {
+            loadAgentsView(config);
+            refreshAgentsStatusView(config);
+            // When loading done, we need to reset it
+            AndTekUI.pullToRefreshDone();
+          }, 500);
+        });
       });
     } else { // otherwise return error message
       var message = "Couldn't establish connection to AndTek server.";
