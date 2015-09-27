@@ -145,14 +145,14 @@ function loadAgentsView(config){
       (function(newAgent, newAgentQueue){
         getCurrentStatus(newAgent, newAgentQueue, function(status){
           if (status) {
-            $('#view-2 ul *[data-mac="' + newAgent + '"] .queues').append('<i data-queue="' + config.agents[newAgent].queues[newAgentQueue] + '" class="fa fa-circle-thin green"></i>');
+            $('#view-2 ul *[data-mac="' + newAgent + '"] .queues').append('<i data-queue="' + newAgentQueue + '" class="fa fa-circle-thin green"></i>');
             console.log('Agent "' + config.agents[newAgent].name + '" IS logged in "' + newAgentQueue + '" queue');
           } else {
-            $('#view-2 ul *[data-mac="' + newAgent + '"] .queues').append('<i data-queue="' + config.agents[newAgent].queues[newAgentQueue] + '" class="fa fa-circle-thin red"></i>');
+            $('#view-2 ul *[data-mac="' + newAgent + '"] .queues').append('<i data-queue="' + newAgentQueue + '" class="fa fa-circle-thin red"></i>');
             console.log('Agent "' + config.agents[newAgent].name + '" is NOT logged in "' + newAgentQueue + '" queue');
           }
         });
-      })(agent, agentQueue);
+      })(agent, config.agents[agent].queues[agentQueue]);
     }
   }
 }
