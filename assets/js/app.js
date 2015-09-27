@@ -206,6 +206,12 @@ $(document).ready(function(){
           });
         });
 
+        // On click on "agents" tab bar icon
+        $('a[href$="#view-2"]').click(function(){
+          // Refresh current agents statuses
+          refreshAgentsStatusView(config);
+        });
+
         /*
          * "agents" view
          */
@@ -230,9 +236,6 @@ $(document).ready(function(){
             $('#view-2 ul *[data-mac="' + agent + '"] .queues').append('<i data-queue="' + config.agents[agent].queues[agentQueue] + '" class="fa fa-circle-thin red"></i>');
           }
         }
-
-        // Refresh current agents statuses
-        refreshAgentsStatusView(config);
       });
     } else { // otherwise return error message
       var message = "Couldn't establish connection to AndTek server.";
