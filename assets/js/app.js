@@ -35,6 +35,17 @@ function isInArray(value, array) {
 }
 
 /**
+ * Simple function to log errors and show an iOS alert
+ * @param  {String} message Input message
+ * @return {Boolean}        true
+ */
+function displayErrorAlert(message){
+  console.log('Error: ' + message);
+  AndTekUI.alert(message);
+  return true;
+}
+
+/**
  * Function to load and store configuration file asynchronous
  * @param  {Function} Callback
  * @return {Object}   Configuration object
@@ -100,7 +111,7 @@ function loadDashboardView(config){
       '  </div>' +
       '</li>'
     );
-    AndTekUI.alert('No queues available for "' + deviceMac);
+    displayErrorAlert('No queues available for "' + deviceMac);
   }
 
   // Get current queue status in "dashboard" view
@@ -201,7 +212,7 @@ $(document).ready(function(){
 
         // Check for declared deviceMac variable... if it doesn't exist, no MAC was passed => show error in dashboard (view-1)
         if (!deviceMac) {
-          AndTekUI.alert('No handset available.');
+          displayErrorAlert('No handset available');
           $('#view-1 ul').html(
             '<li>' +
             '  <div class="item-content">' +
@@ -279,8 +290,7 @@ $(document).ready(function(){
       });
     } else { // otherwise return error message
       var message = "Couldn't establish connection to AndTek server.";
-      console.log(message);
-      AndTekUI.alert(message);
+      displayErrorAlert(message);
       // Destroy Pull to refresh menus
       AndTekUI.destroyPullToRefresh($$('div[data-page=index-1] .pull-to-refresh-content'));
       AndTekUI.destroyPullToRefresh($$('div[data-page=index-2] .pull-to-refresh-content'));
