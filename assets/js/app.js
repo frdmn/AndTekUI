@@ -281,6 +281,9 @@ $(document).ready(function(){
       var message = "Couldn't establish connection to AndTek server.";
       console.log(message);
       AndTekUI.alert(message);
+      // Destroy Pull to refresh menus
+      AndTekUI.destroyPullToRefresh($$('div[data-page=index-1] .pull-to-refresh-content'));
+      AndTekUI.destroyPullToRefresh($$('div[data-page=index-2] .pull-to-refresh-content'));
     }
   });
 });
