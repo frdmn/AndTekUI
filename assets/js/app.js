@@ -182,11 +182,14 @@ $(document).ready(function(){
           // Get current queue status in "dashboard" view
           $('#view-1 ul li').each(function(){
             var queueId = $('.item-title', this).data('queue'),
-                liDom = $(this);
+                liDom = $(this); // Store <li> DOM in variable
+            // Get current queue status via PHP API
             $.getJSON( 'api/get/?mac=' + deviceMac + '&queue=' + queueId, function( json ) {
+              // If "true" check checbox
               if (json.data.status) {
                 $('input', liDom).prop('checked', true);
               } else {
+                // Otherwise uncheck checkbox
                 $('input', liDom).prop('checked', false);
               }
             });
