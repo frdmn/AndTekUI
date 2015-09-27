@@ -254,8 +254,10 @@ $(document).ready(function(){
 
         // On click on "agents" tab bar icon
         $('a[href$="#view-2"]').click(function(){
-          // Refresh current agents statuses
-          loadAgentsView(config);
+          if (deviceMac) {
+            // Refresh current agents statuses
+            loadAgentsView(config);
+          }
         });
 
         /*
