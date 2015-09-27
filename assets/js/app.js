@@ -60,32 +60,6 @@ function getCurrentStatus(agentMacAddress, queueId, callback){
 }
 
 /**
- * Function to render the agents status in the view
- * @param  {Object}   Configuration object
- * @return {Boolean}  true
- */
-function refreshAgentsStatusView(config){
-  for (var agent in config.agents) {
-    $('*[data-mac="' + agent + '"] .item-after .fa').each(function(agentQueue){
-      var newAgent = agent,
-          newAgentQueueDom = $(this),
-          newAgentQueue = $(newAgentQueueDom).data('queue');
-
-      getCurrentStatus(newAgent, newAgentQueue, function(status){
-        if (status) {
-          $(newAgentQueueDom).removeClass('red').addClass('green');
-          console.log('Agent "' + config.agents[newAgent].name + '" IS logged in "' + newAgentQueue + '" queue');
-        } else {
-          $(newAgentQueueDom).removeClass('green').addClass('red');
-          console.log('Agent "' + config.agents[newAgent].name + '" is NOT logged in "' + newAgentQueue + '" queue');
-        }
-      });
-    });
-  }
-  return true;
-}
-
-/**
  * Function to render the dashboard view
  * @param  {Object}   Configuration object
  */
@@ -168,7 +142,17 @@ function loadAgentsView(config){
 
     // Add status icon for each assigned queue
     for(var agentQueue in config.agents[agent].queues){
-      $('#view-2 ul *[data-mac="' + agent + '"] .queues').append('<i data-queue="' + config.agents[agent].queues[agentQueue] + '" class="fa fa-circle-thin red"></i>');
+      (function(newAgent, newAgentQueue){
+        getCurrentStatus(newAgent, newAgentQueue, function(status){
+          if (status) {
+            $('#view-2 ul *[data-mac="' + newAgent + '"] .queues').append('<i data-queue="' + config.agents[newAgent].queues[newAgentQueue] + '" class="fa fa-circle-thin green"></i>');
+            console.log('Agent "' + config.agents[newAgent].name + '" IS logged in "' + newAgentQueue + '" queue');
+          } else {
+            $('#view-2 ul *[data-mac="' + newAgent + '"] .queues').append('<i data-queue="' + config.agents[newAgent].queues[newAgentQueue] + '" class="fa fa-circle-thin red"></i>');
+            console.log('Agent "' + config.agents[newAgent].name + '" is NOT logged in "' + newAgentQueue + '" queue');
+          }
+        });
+      })(agent, agentQueue);
     }
   }
 }
@@ -260,7 +244,7 @@ $(document).ready(function(){
         // On click on "agents" tab bar icon
         $('a[href$="#view-2"]').click(function(){
           // Refresh current agents statuses
-          refreshAgentsStatusView(config);
+          loadAgentsView(config);
         });
 
         /*
@@ -278,8 +262,6 @@ $(document).ready(function(){
              '  </div>' +
              '</li>'
            );
-         } else {
-           loadAgentsView(config);
          }
 
          /* Pull to refresh */
@@ -290,7 +272,6 @@ $(document).ready(function(){
          ptrAgentsContent.on('refresh', function (e) {
           setTimeout(function () {
             loadAgentsView(config);
-            refreshAgentsStatusView(config);
             // When loading done, we need to reset it
             AndTekUI.pullToRefreshDone();
           }, 500);
