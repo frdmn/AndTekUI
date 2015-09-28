@@ -142,7 +142,7 @@ function loadAgentsView(config){
   for (var agent in config.agents) {
     $('#view-2 ul').append(
       '<li class="item-content">' +
-      '  <div class="item-media"><i class="fa fa-user"></i></div>' +
+      '  <div class="item-media"><i class="queueicon queueicon--list"></i></div>' +
       '  <div class="item-inner" data-user="' + config.agents[agent].name + '" data-mac="' + agent + '">' +
       '    <div class="item-title">' + config.agents[agent].name + '</div>' +
       '    <div class="item-after queues">' +
@@ -156,10 +156,10 @@ function loadAgentsView(config){
       (function(newAgent, newAgentQueue){
         getCurrentStatus(newAgent, newAgentQueue, function(status){
           if (status) {
-            $('#view-2 ul *[data-mac="' + newAgent + '"] .queues').append('<i data-queue="' + newAgentQueue + '" class="fa fa-circle-thin green"></i>');
+            $('#view-2 ul *[data-mac="' + newAgent + '"] .queues').append('<i data-queue="' + newAgentQueue + '" class="queueicon queueicon--queue' + newAgentQueue +' queueicon--active"></i>');
             console.log('Agent "' + config.agents[newAgent].name + '" IS logged in "' + newAgentQueue + '" queue');
           } else {
-            $('#view-2 ul *[data-mac="' + newAgent + '"] .queues').append('<i data-queue="' + newAgentQueue + '" class="fa fa-circle-thin red"></i>');
+            $('#view-2 ul *[data-mac="' + newAgent + '"] .queues').append('<i data-queue="' + newAgentQueue + '" class="queueicon queueicon--queue' + newAgentQueue +'"></i>');
             console.log('Agent "' + config.agents[newAgent].name + '" is NOT logged in "' + newAgentQueue + '" queue');
           }
         });
