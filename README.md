@@ -1,6 +1,6 @@
 # AndTekUI (WIP)
 
-![](http://up.frd.mn/MR4cD.jpg)
+![](http://up.frd.mn/YbxY9.jpg)
 
 Simple iOS (web app) dashboard for your AndTek call center.
 
