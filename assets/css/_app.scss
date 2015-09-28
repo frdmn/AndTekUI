@@ -78,6 +78,18 @@ i.tabbar-icon-4 {
   background: url(../svg/queue1.svg) no-repeat top left;
 }
 
+.absolute--queue1 {
+  right: 45px;
+  margin-top: -12px;
+  position: absolute;
+}
+
 .queueicon--queue2 {
   background: url(../svg/queue2.svg) no-repeat top left;
+}
+
+.absolute--queue2 {
+  position: absolute;
+  right: 20px;
+  margin-top: -12px;
 }
