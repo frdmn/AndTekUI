@@ -293,8 +293,8 @@ $(document).ready(function(){
 
          // Add 'refresh' listener on it
          ptrAgentsContent.on('refresh', function (e) {
+          loadAgentsView(config);
           setTimeout(function () {
-            loadAgentsView(config);
             // When loading done, we need to reset it
             AndTekUI.pullToRefreshDone();
           }, 500);
