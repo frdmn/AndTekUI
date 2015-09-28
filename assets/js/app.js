@@ -106,6 +106,8 @@ function getCurrentStatus(agentMacAddress, queueId, callback){
  * @param  {Object}   Configuration object
  */
 function loadDashboardView(config){
+  $('#view-1 .center.sliding').html(config.agents[deviceMac].name);
+
   // Get rid of "Loading ..." dummy entry
   $('#view-1 ul').html('');
   // For each agent in configuration ...
