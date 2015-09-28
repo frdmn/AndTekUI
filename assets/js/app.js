@@ -297,7 +297,7 @@ $(document).ready(function(){
           setTimeout(function () {
             // When loading done, we need to reset it
             AndTekUI.pullToRefreshDone();
-          }, 500);
+          }, 1000);
         });
       });
     } else { // otherwise return error message
