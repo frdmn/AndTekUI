@@ -249,19 +249,6 @@ $(document).ready(function(){
           });
         });
 
-        /* Pull to refresh */
-
-        var ptrDashboardContent = $$('div[data-page=index-1] .pull-to-refresh-content');
-
-        // Add 'refresh' listener on it
-        ptrDashboardContent.on('refresh', function (e) {
-          setTimeout(function () {
-            loadDashboardView(config);
-            // When loading done, we need to reset it
-            AndTekUI.pullToRefreshDone();
-          }, 500);
-        });
-
         /*
          * "agents" view
          */
@@ -291,7 +278,7 @@ $(document).ready(function(){
             AndTekUI.pullToRefreshDone();
           }, 1000);
         });
-        
+
         /*
          * Tab bar
          */
@@ -317,7 +304,6 @@ $(document).ready(function(){
       var message = "Couldn't establish connection to AndTek server.";
       displayErrorAlert(message);
       // Destroy Pull to refresh menus
-      AndTekUI.destroyPullToRefresh($$('div[data-page=index-1] .pull-to-refresh-content'));
       AndTekUI.destroyPullToRefresh($$('div[data-page=index-2] .pull-to-refresh-content'));
     }
   });
