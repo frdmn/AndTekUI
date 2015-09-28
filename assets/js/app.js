@@ -330,6 +330,13 @@ $(document).ready(function(){
           }
         });
 
+        /* Miscellenious */
+
+        // Set version
+        $.get('VERSION', function(data) {
+          var versionTemplate = $('.copyright p').html();
+          $('.copyright p').html(sprintf(versionTemplate, data));
+        });
       });
     } else { // otherwise return error message
       var message = "Couldn't establish connection to AndTek server.";
