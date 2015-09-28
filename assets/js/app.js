@@ -230,12 +230,21 @@ $(document).ready(function(){
         $(':checkbox').change(function() {
           var currentQueue = $(this).parent().parent().parent().siblings('.item-title').data('queue'),
               currentStatus = $(this).is(":checked");
+              currentDom = $(this); // Store <input>'s DOM
+
+          // Disable checkbox
+          $(currentDom).prop( "disabled", true );
 
           // Try to set said status via PHP API
           $.getJSON('api/set/', {mac: deviceMac, queue: currentQueue, status: currentStatus}, function(json, textStatus) {
-            if (json.success) {
-              console.log('Agent "' + config.agents[deviceMac].name + '" is ' + (json.data.status ? 'NOW' : 'NOT')  + ' logged in queue "' + currentQueue + '"');
-            }
+            // Add slight delay for UX purposes
+            setTimeout(function(){
+              if (json.success) {
+                console.log('Agent "' + config.agents[deviceMac].name + '" is ' + (json.data.status ? 'NOW' : 'NOT')  + ' logged in queue "' + currentQueue + '"');
+                // Reenable checkbox
+                $(currentDom).prop( "disabled", false );
+              }
+            }, 500);
           });
         });
 
