@@ -2,7 +2,7 @@
 
 ![](http://up.frd.mn/YbxY9.jpg)
 
-Simple iOS (web app) dashboard for your AndTek call center.
+Simple iOS web application to control your AndTek call center status. Comes with a (poor man's) PHP API located in the [`api/`](api/) folder to talk to the AndTek backend.
 
 ## Installation
 
