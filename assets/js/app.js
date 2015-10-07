@@ -332,7 +332,7 @@ $(document).ready(function(){
           }
         });
 
-        /* Miscellenious */
+        /* Miscellaneous */
 
         // Set version
         $.get('VERSION', function(data) {
