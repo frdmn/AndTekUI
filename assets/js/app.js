@@ -180,8 +180,8 @@ function loadAgentsView(config){
       '  <div class="item-inner" data-user="' + config.agents[agent].name + '" data-mac="' + agent + '">' +
       '    <div class="item-title">' + config.agents[agent].name + '</div>' +
       '    <div class="item-after queues">' +
-      '      <i data-queue="2" class="queueicon queueicon--queue2 absolute--queue2"></i>' +
-      '      <i data-queue="1" class="queueicon queueicon--queue1 absolute--queue1"></i>' +
+      (isInArray(1, config.agents[agent].queues) ? '<i data-queue="1" class="queueicon queueicon--queue1 absolute--queue1"></i>' : '') +
+      (isInArray(2, config.agents[agent].queues) ? '<i data-queue="2" class="queueicon queueicon--queue2 absolute--queue2"></i>' : '') +
       '    </div>' +
       '  </div>' +
       '</li>'
