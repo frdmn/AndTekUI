@@ -192,10 +192,10 @@ function loadAgentsView(config){
       (function(newAgent, newAgentQueue){
         getCurrentStatus(newAgent, newAgentQueue, function(status){
           if (status) {
-            $('#view-2 ul *[data-mac="' + newAgent + '"] .queues').append('<i data-queue="' + newAgentQueue + '" class="queueicon queueicon--queue' + newAgentQueue +' absolute--queue' + newAgentQueue + ' queueicon--active"></i>');
+            $('#view-2 ul *[data-mac="' + newAgent + '"] .queues i[data-queue="' + newAgentQueue + '"]').addClass('queueicon--active');
             console.log('Agent "' + config.agents[newAgent].name + '" IS logged in "' + newAgentQueue + '" queue');
           } else {
-            $('#view-2 ul *[data-mac="' + newAgent + '"] .queues').append('<i data-queue="' + newAgentQueue + '" class="queueicon queueicon--queue' + newAgentQueue +' absolute--queue' + newAgentQueue + '"></i>');
+            $('#view-2 ul *[data-mac="' + newAgent + '"] .queues i[data-queue="' + newAgentQueue + '"]').removeClass('queueicon--active');
             console.log('Agent "' + config.agents[newAgent].name + '" is NOT logged in "' + newAgentQueue + '" queue');
           }
         });
