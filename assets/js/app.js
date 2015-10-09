@@ -333,14 +333,14 @@ $(document).ready(function(){
             loadAgentsView(config);
           }
         });
+      });
 
-        /* Miscellaneous */
+      /* Miscellaneous */
 
-        // Set version
-        $.get('VERSION', function(data) {
-          var versionTemplate = $('.copyright p').html();
-          $('.copyright p').html(sprintf(versionTemplate, data));
-        });
+      // Set version
+      $.get('VERSION', function(data) {
+        var versionTemplate = $('.copyright p').html();
+        $('.copyright p').html(sprintf(versionTemplate, data));
       });
     } else { // otherwise return error message
       var message = "Couldn't establish connection to AndTek server.";
